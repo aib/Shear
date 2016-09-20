@@ -87,20 +87,25 @@ def main():
 	(port, pid) = (None, None)
 	midiCheckTime = time.monotonic()
 
-	while True:
-		midi_tasks(port)
+	try:
+		while True:
+			midi_tasks(port)
 
-		if port is None:
-			checkInterval = MIDI_DISCONNECTED_CHECK_INTERVAL
-		else:
-			checkInterval = MIDI_CONNECTED_CHECK_INTERVAL
+			if port is None:
+				checkInterval = MIDI_DISCONNECTED_CHECK_INTERVAL
+			else:
+				checkInterval = MIDI_CONNECTED_CHECK_INTERVAL
 
-		now = time.monotonic()
-		if (now - midiCheckTime >= checkInterval):
-			(port, pid) = replace_port(port, pid)
-			midiCheckTime = now
+			now = time.monotonic()
+			if (now - midiCheckTime >= checkInterval):
+				(port, pid) = replace_port(port, pid)
+				midiCheckTime = now
 
-		time.sleep(0.001)
+			time.sleep(0.001)
+	except KeyboardInterrupt:
+		if port is not None:
+			port.send_message([CONTROL_CHANGE, ALL_NOTES_OFF, 0])
+		pass
 
 def midi_tasks(port):
 	for cap in range(len(caps)):
