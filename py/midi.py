@@ -6,9 +6,36 @@ import time
 
 import rtmidi
 from rtmidi.midiconstants import *
+import Adafruit_MPR121.MPR121 as MPR121
 
 MIDI_DISCONNECTED_CHECK_INTERVAL = 1
 MIDI_CONNECTED_CHECK_INTERVAL = 10
+
+cap_addrs = [
+#	0x5a,
+#	0x5b,
+#	0x5c,
+	0x5d
+]
+
+key_map = [
+	(0, 60),
+	(0, 61),
+	(0, 62),
+	(0, 63),
+	(0, 64),
+	(0, 65),
+	(0, 66),
+	(0, 67),
+	(0, 68),
+	(0, 69),
+	(0, 70),
+	(0, 71),
+]
+
+caps = []
+keys = [False] * len(key_map)
+keys_last = [False] * len(key_map)
 
 def find_port():
 	midiout = rtmidi.MidiOut()
@@ -52,6 +79,11 @@ def pid_exists(pid):
 		return True
 
 def main():
+	for addr in cap_addrs:
+		cap = MPR121.MPR121()
+		cap.begin(addr)
+		caps.append(cap)
+
 	(port, pid) = (None, None)
 	midiCheckTime = time.monotonic()
 
@@ -65,19 +97,29 @@ def main():
 
 		now = time.monotonic()
 		if (now - midiCheckTime >= checkInterval):
-			print("Checking MIDI connection " + str((port, pid)) + "")
 			(port, pid) = replace_port(port, pid)
 			midiCheckTime = now
 
-		time.sleep(1)
+		time.sleep(0.001)
 
-import random
 def midi_tasks(port):
-	if port is not None:
-		note = random.randint(60, 72)
-		port.send_message([NOTE_ON, note, 127])
-		time.sleep(0.1)
-		port.send_message([NOTE_OFF, note, 0])
+	for cap in range(len(caps)):
+		touched_data = caps[cap].touched()
+
+		for pin in range(12):
+			key = cap*12 + pin
+			keys[key] = touched_data & (1 << pin)
+
+			if keys[key] and not keys_last[key]:
+				print("Key %d touched" % (key,))
+				if port is not None:
+					port.send_message([NOTE_ON + key_map[key][0], key_map[key][1], 127])
+			elif not keys[key] and keys_last[key]:
+				print("Key %d released" % (key,))
+				if port is not None:
+					port.send_message([NOTE_OFF + key_map[key][0], key_map[key][1], 0])
+
+			keys_last[key] = keys[key]
 
 if __name__ == '__main__':
 	main()
