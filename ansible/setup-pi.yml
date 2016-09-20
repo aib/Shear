@@ -1,0 +1,21 @@
+---
+- hosts: pi
+  tasks:
+    - name: create project directory
+      file: path=/home/pi/heykel state=directory
+
+    - name: enable I2C in boot.txt
+      become: yes
+      lineinfile: dest=/boot/config.txt line="dtparam=i2c_arm=on" insertafter=EOF
+
+    - name: enable I2C module
+      become: yes
+      lineinfile: dest=/etc/modules line="i2c-dev" insertafter=EOF
+
+    - name: apt-get update
+      become: yes
+      apt: update_cache=yes cache_valid_time=86400
+
+    - name: install i2c-tools
+      become: yes
+      apt: name=i2c-tools state=latest
