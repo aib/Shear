@@ -33,7 +33,7 @@ key_map = [
 	(0, 71),
 ]
 
-caps = []
+caps = [None] * len(cap_addrs)
 keys = [False] * len(key_map)
 keys_last = [False] * len(key_map)
 
@@ -79,17 +79,21 @@ def pid_exists(pid):
 		return True
 
 def main():
-	for addr in cap_addrs:
-		cap = MPR121.MPR121()
-		cap.begin(addr)
-		caps.append(cap)
-
 	(port, pid) = (None, None)
 	midiCheckTime = time.monotonic()
 
 	try:
 		while True:
 			midi_tasks(port)
+
+			for i in range(len(cap_addrs)):
+				if caps[i] is None:
+					cap = MPR121.MPR121()
+					try:
+						cap.begin(cap_addrs[i])
+						caps[i] = cap
+					except OSError:
+						pass
 
 			if port is None:
 				checkInterval = MIDI_DISCONNECTED_CHECK_INTERVAL
@@ -108,8 +112,15 @@ def main():
 		pass
 
 def midi_tasks(port):
-	for cap in range(len(caps)):
-		touched_data = caps[cap].touched()
+	for cap in range(len(cap_addrs)):
+		if caps[cap] is not None:
+			try:
+				touched_data = caps[cap].touched()
+			except OSError:
+				touched_data = 0
+				caps[cap] = None
+		else:
+			touched_data = 0
 
 		for pin in range(12):
 			key = cap*12 + pin
