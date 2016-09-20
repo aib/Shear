@@ -107,21 +107,21 @@ class MPR121(object):
         # Configure baseline filtering control registers.
         self._i2c_retry(self._device.write8, MPR121_MHDR, 0x01)
         self._i2c_retry(self._device.write8, MPR121_NHDR, 0x01)
-        self._i2c_retry(self._device.write8, MPR121_NCLR, 0x0E)
-        self._i2c_retry(self._device.write8, MPR121_FDLR, 0x00)
+        self._i2c_retry(self._device.write8, MPR121_NCLR, 0x10)
+        self._i2c_retry(self._device.write8, MPR121_FDLR, 0x20)
         self._i2c_retry(self._device.write8, MPR121_MHDF, 0x01)
-        self._i2c_retry(self._device.write8, MPR121_NHDF, 0x05)
-        self._i2c_retry(self._device.write8, MPR121_NCLF, 0x01)
-        self._i2c_retry(self._device.write8, MPR121_FDLF, 0x00)
+        self._i2c_retry(self._device.write8, MPR121_NHDF, 0x01)
+        self._i2c_retry(self._device.write8, MPR121_NCLF, 0x10)
+        self._i2c_retry(self._device.write8, MPR121_FDLF, 0x20)
         self._i2c_retry(self._device.write8, MPR121_NHDT, 0x00)
         self._i2c_retry(self._device.write8, MPR121_NCLT, 0x00)
         self._i2c_retry(self._device.write8, MPR121_FDLT, 0x00)
         # Set other configuration registers.
-        self._i2c_retry(self._device.write8, MPR121_DEBOUNCE, 0)
-        self._i2c_retry(self._device.write8, MPR121_CONFIG1, 0x10) # default, 16uA charge current
-        self._i2c_retry(self._device.write8, MPR121_CONFIG2, 0x20) # 0.5uS encoding, 1ms period
+        self._i2c_retry(self._device.write8, MPR121_DEBOUNCE, 11)
+        self._i2c_retry(self._device.write8, MPR121_CONFIG1, 0xff) # default, 16uA charge current
+        self._i2c_retry(self._device.write8, MPR121_CONFIG2, 0x30) # 0.5uS encoding, 1ms period
         # Enable all electrodes.
-        self._i2c_retry(self._device.write8, MPR121_ECR, 0x8F) # start with first 5 bits of baseline tracking
+        self._i2c_retry(self._device.write8, MPR121_ECR, 0xcc) # start with first 5 bits of baseline tracking
         # All done, everything succeeded!
         return True
 
