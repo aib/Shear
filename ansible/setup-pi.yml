@@ -47,6 +47,10 @@
       with_items:
         - bootlogs
 
+    - name: change kernel parameters
+      sudo: yes
+      replace: dest=/boot/cmdline.txt regexp='^(.*rootwait)$' replace='\1 noswap fastboot ro'
+
     - name: mount /boot read-only
       sudo: yes
       replace: dest=/etc/fstab regexp='^(\/dev\/mmcblk0p1\s+\/boot\s+vfat\s+)defaults(\s+0\s+2)$' replace='\1defaults,ro\2' backup=yes
