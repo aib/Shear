@@ -48,5 +48,13 @@
         - bootlogs
         - console-setup
 
+    - name: mount /boot read-only
+      sudo: yes
+      replace: dest=/etc/fstab regexp='^(\/dev\/mmcblk0p1\s+\/boot\s+vfat\s+)defaults(\s+0\s+2)$' replace='\1defaults,ro\2' backup=yes
+
+    - name: mount / read-only
+      sudo: yes
+      replace: dest=/etc/fstab regexp='^(\/dev\/mmcblk0p2\s+\/\s+ext4\s+)defaults,noatime(\s+0\s+1)$' replace='\1defaults,noatime,ro\2' backup=yes
+
     - name: copy project directory
       synchronize: src=../../heykel dest=/home/pi recursive=yes delete=yes
