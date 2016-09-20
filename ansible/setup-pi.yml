@@ -19,7 +19,7 @@
 
     - name: remove unnecessary packages
       become: yes
-      apt: name={{item}} state=absent purge=yes
+      apt: name={{item}} state=absent purge=yes autoremove=yes
       with_items:
         - pi-bluetooth
         - ntp
