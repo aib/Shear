@@ -20,6 +20,7 @@
         - fluid-soundfont-gm
         - libasound2-dev
         - libjack-jackd2-dev
+        - busybox-syslogd
 
     - name: remove unnecessary packages
       sudo: yes
@@ -27,6 +28,10 @@
       with_items:
         - pi-bluetooth
         - ntp
+        - triggerhappy
+        - dbus
+        - dphys-swapfile
+        - rsyslog
 
     - name: enable I2C module
       sudo: yes
