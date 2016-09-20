@@ -36,9 +36,5 @@
       sudo: yes
       lineinfile: dest=/boot/config.txt line="dtparam=i2c_arm=on" insertafter=EOF
 
-    - name: install i2c-tools
-      become: yes
-      apt: name=i2c-tools state=latest
-
     - name: copy project directory
       synchronize: src=../../heykel dest=/home/pi recursive=yes delete=yes
