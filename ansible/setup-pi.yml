@@ -1,8 +1,8 @@
 ---
 - hosts: pi
   tasks:
-    - name: create project directory
-      file: path=/home/pi/heykel state=directory
+    - name: install SSH key
+      authorized_key: user=pi key="{{ lookup('file', '../data/master_key.pub') }}"
 
     - name: enable I2C in boot.txt
       become: yes
@@ -19,3 +19,10 @@
     - name: install i2c-tools
       become: yes
       apt: name=i2c-tools state=latest
+
+    - name: install rsync
+      become: yes
+      apt: name=rsync state=latest
+
+    - name: copy project directory
+      synchronize: src=../../heykel dest=/home/pi recursive=yes delete=yes
