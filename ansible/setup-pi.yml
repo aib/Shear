@@ -16,6 +16,10 @@
         - i2c-tools
         - python3
         - python3-pip
+        - fluidsynth
+        - fluid-soundfont-gm
+        - libasound2-dev
+        - libjack-jackd2-dev
 
     - name: remove unnecessary packages
       become: yes
