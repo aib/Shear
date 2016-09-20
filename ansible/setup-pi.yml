@@ -41,5 +41,12 @@
       sudo: yes
       lineinfile: dest=/boot/config.txt line="dtparam=i2c_arm=on" insertafter=EOF
 
+    - name: disable unnecessary services
+      sudo: yes
+      service: name={{item}} enabled=no
+      with_items:
+        - bootlogs
+        - console-setup
+
     - name: copy project directory
       synchronize: src=../../heykel dest=/home/pi recursive=yes delete=yes
