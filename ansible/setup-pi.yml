@@ -5,11 +5,11 @@
       authorized_key: user=pi key="{{ lookup('file', '../data/master_key.pub') }}"
 
     - name: apt-get update
-      become: yes
+      sudo: yes
       apt: update_cache=yes cache_valid_time=86400
 
     - name: install basic requirements
-      become: yes
+      sudo: yes
       apt: name={{item}} state=latest
       with_items:
         - rsync
@@ -22,18 +22,18 @@
         - libjack-jackd2-dev
 
     - name: remove unnecessary packages
-      become: yes
+      sudo: yes
       apt: name={{item}} state=absent purge=yes autoremove=yes
       with_items:
         - pi-bluetooth
         - ntp
 
     - name: enable I2C module
-      become: yes
+      sudo: yes
       lineinfile: dest=/etc/modules line="i2c-dev" insertafter=EOF
 
     - name: enable I2C in boot.txt
-      become: yes
+      sudo: yes
       lineinfile: dest=/boot/config.txt line="dtparam=i2c_arm=on" insertafter=EOF
 
     - name: install i2c-tools
