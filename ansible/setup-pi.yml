@@ -43,10 +43,9 @@
 
     - name: disable unnecessary services
       sudo: yes
-      service: name={{item}} enabled=no
+      command: insserv -r {{item}}
       with_items:
         - bootlogs
-        - console-setup
 
     - name: mount /boot read-only
       sudo: yes
