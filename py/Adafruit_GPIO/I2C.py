@@ -76,7 +76,7 @@ def require_repeated_start():
         # repeated start condition like the kernel smbus I2C driver functions
         # define.  As a workaround this bit in the BCM2708 driver sysfs tree can
         # be changed to enable I2C repeated starts.
-        subprocess.check_call('chmod 666 /sys/module/i2c_bcm2708/parameters/combined', shell=True)
+        subprocess.check_call('sudo chmod 666 /sys/module/i2c_bcm2708/parameters/combined', shell=True)
         subprocess.check_call('echo -n 1 > /sys/module/i2c_bcm2708/parameters/combined', shell=True)
     # Other platforms are a no-op because they (presumably) have the correct
     # behavior and send repeated starts.
