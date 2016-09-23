@@ -47,6 +47,14 @@
     - name: set sound volume
       command: amixer cset numid=1 400
 
+    - name: run synth at boot
+      sudo: yes
+      lineinfile: dest=/etc/rc.local line="/home/pi/heykel/synth/run.sh &" insertbefore="^exit 0$"
+
+    - name: run keyboard at boot
+      sudo: yes
+      lineinfile: dest=/etc/rc.local line="/home/pi/heykel/py/midi.py &" insertbefore="^exit 0$"
+
     - name: disable unnecessary services
       sudo: yes
       command: insserv -r {{item}}
