@@ -33,6 +33,10 @@
         - dphys-swapfile
         - rsyslog
 
+    - name: install python-rtmidi
+      sudo: yes
+      command: pip3 install --pre python-rtmidi
+
     - name: enable I2C module
       sudo: yes
       lineinfile: dest=/etc/modules line="i2c-dev" insertafter=EOF
