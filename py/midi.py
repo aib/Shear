@@ -166,11 +166,11 @@ def midi_tasks(port):
 			keys[key] = touched_data & (1 << pin)
 
 			if keys[key] and not keys_last[key]:
-				print("Key %d touched" % (key,))
+				print("Key %d touched (%d on %d)" % (key, key_map[key][1], key_map[key][0]))
 				if port is not None:
 					port.send_message([NOTE_ON + key_map[key][0], key_map[key][1], 127])
 			elif not keys[key] and keys_last[key]:
-				print("Key %d released" % (key,))
+				print("Key %d released (%d on %d)" % (key, key_map[key][1], key_map[key][0]))
 				if port is not None:
 					port.send_message([NOTE_OFF + key_map[key][0], key_map[key][1], 0])
 
