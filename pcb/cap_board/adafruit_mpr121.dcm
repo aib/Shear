@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP Adafruit_MPR121
+D Adafruit's MPR121 breakout
+K MPR121
+F https://www.adafruit.com/product/1982
+$ENDCMP
+#
+#End Doc Library
