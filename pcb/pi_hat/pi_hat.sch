@@ -1,0 +1,243 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Conn_02x20_Odd_Even J1
+U 1 1 59F96A2F
+P 4100 3600
+F 0 "J1" H 4150 4600 50  0000 C CNN
+F 1 "Conn_02x20_Odd_Even" H 4150 2500 50  0000 C CNN
+F 2 "" H 4100 3600 50  0001 C CNN
+F 3 "" H 4100 3600 50  0001 C CNN
+	1    4100 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L RJ45 J2
+U 1 1 59F96B53
+P 6200 2950
+F 0 "J2" H 6400 3450 50  0000 C CNN
+F 1 "RJ45" H 6050 3450 50  0000 C CNN
+F 2 "" H 6200 2950 50  0001 C CNN
+F 3 "" H 6200 2950 50  0001 C CNN
+	1    6200 2950
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR2
+U 1 1 59F96C02
+P 4600 3100
+F 0 "#PWR2" H 4600 2850 50  0001 C CNN
+F 1 "GND" H 4600 2950 50  0000 C CNN
+F 2 "" H 4600 3100 50  0001 C CNN
+F 3 "" H 4600 3100 50  0001 C CNN
+	1    4600 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR5
+U 1 1 59F96C32
+P 5650 3400
+F 0 "#PWR5" H 5650 3150 50  0001 C CNN
+F 1 "GND" H 5650 3250 50  0000 C CNN
+F 2 "" H 5650 3400 50  0001 C CNN
+F 3 "" H 5650 3400 50  0001 C CNN
+	1    5650 3400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4600 3100 4600 2900
+Wire Wire Line
+	4600 2900 4400 2900
+Wire Wire Line
+	5750 2600 5650 2600
+Wire Wire Line
+	5650 2600 5650 3400
+$Comp
+L +5V #PWR1
+U 1 1 59F96C62
+P 4600 2500
+F 0 "#PWR1" H 4600 2350 50  0001 C CNN
+F 1 "+5V" H 4600 2640 50  0000 C CNN
+F 2 "" H 4600 2500 50  0001 C CNN
+F 3 "" H 4600 2500 50  0001 C CNN
+	1    4600 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR3
+U 1 1 59F96C9C
+P 5550 2500
+F 0 "#PWR3" H 5550 2350 50  0001 C CNN
+F 1 "+5V" H 5550 2640 50  0000 C CNN
+F 2 "" H 5550 2500 50  0001 C CNN
+F 3 "" H 5550 2500 50  0001 C CNN
+	1    5550 2500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5750 2800 5550 2800
+Wire Wire Line
+	5550 2800 5550 2500
+Wire Wire Line
+	5750 2700 5300 2700
+Wire Wire Line
+	5750 3100 5300 3100
+Text Label 5300 2700 0    60   ~ 0
+SCL
+Text Label 5300 3100 0    60   ~ 0
+SDA
+Wire Wire Line
+	3900 2900 3500 2900
+Wire Wire Line
+	3900 2800 3500 2800
+Text Label 3500 2800 0    60   ~ 0
+SDA
+Text Label 3500 2900 0    60   ~ 0
+SCL
+NoConn ~ 5750 2900
+NoConn ~ 5750 3000
+NoConn ~ 5750 3200
+NoConn ~ 5750 3300
+NoConn ~ 6550 3500
+NoConn ~ 4400 4600
+NoConn ~ 4400 4500
+NoConn ~ 4400 4400
+NoConn ~ 4400 4300
+NoConn ~ 4400 4200
+NoConn ~ 4400 4100
+NoConn ~ 4400 4000
+NoConn ~ 4400 3900
+NoConn ~ 4400 3800
+NoConn ~ 4400 3700
+NoConn ~ 4400 3600
+NoConn ~ 4400 3500
+NoConn ~ 4400 3400
+NoConn ~ 4400 3300
+NoConn ~ 4400 3200
+NoConn ~ 4400 3100
+NoConn ~ 4400 3000
+NoConn ~ 3900 2700
+NoConn ~ 3900 3000
+NoConn ~ 3900 3100
+NoConn ~ 3900 3200
+NoConn ~ 3900 3300
+NoConn ~ 3900 3400
+NoConn ~ 3900 3500
+NoConn ~ 3900 3600
+NoConn ~ 3900 3700
+NoConn ~ 3900 3800
+NoConn ~ 3900 3900
+NoConn ~ 3900 4000
+NoConn ~ 3900 4100
+NoConn ~ 3900 4200
+NoConn ~ 3900 4300
+NoConn ~ 3900 4400
+NoConn ~ 3900 4500
+NoConn ~ 3900 4600
+Wire Wire Line
+	4400 2700 4600 2700
+Wire Wire Line
+	4600 2500 4600 2800
+Wire Wire Line
+	4600 2800 4400 2800
+Connection ~ 4600 2700
+$Comp
+L RJ45 J3
+U 1 1 59F972F9
+P 6200 4350
+F 0 "J3" H 6400 4850 50  0000 C CNN
+F 1 "RJ45" H 6050 4850 50  0000 C CNN
+F 2 "" H 6200 4350 50  0001 C CNN
+F 3 "" H 6200 4350 50  0001 C CNN
+	1    6200 4350
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR6
+U 1 1 59F972FF
+P 5650 4800
+F 0 "#PWR6" H 5650 4550 50  0001 C CNN
+F 1 "GND" H 5650 4650 50  0000 C CNN
+F 2 "" H 5650 4800 50  0001 C CNN
+F 3 "" H 5650 4800 50  0001 C CNN
+	1    5650 4800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5750 4000 5650 4000
+Wire Wire Line
+	5650 4000 5650 4800
+$Comp
+L +5V #PWR4
+U 1 1 59F97307
+P 5550 3900
+F 0 "#PWR4" H 5550 3750 50  0001 C CNN
+F 1 "+5V" H 5550 4040 50  0000 C CNN
+F 2 "" H 5550 3900 50  0001 C CNN
+F 3 "" H 5550 3900 50  0001 C CNN
+	1    5550 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5750 4200 5550 4200
+Wire Wire Line
+	5550 4200 5550 3900
+Wire Wire Line
+	5750 4100 5300 4100
+Wire Wire Line
+	5750 4500 5300 4500
+Text Label 5300 4100 0    60   ~ 0
+SCL
+Text Label 5300 4500 0    60   ~ 0
+SDA
+NoConn ~ 5750 4300
+NoConn ~ 5750 4400
+NoConn ~ 5750 4600
+NoConn ~ 5750 4700
+NoConn ~ 6550 4900
+$EndSCHEMATC
