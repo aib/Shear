@@ -75,7 +75,7 @@ U 1 1 59F9757D
 P 5300 3400
 F 0 "J1" H 5300 3500 50  0000 C CNN
 F 1 "Conn_01x02" H 5300 3200 50  0000 C CNN
-F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.00mm_Vertical" H 5300 3400 50  0001 C CNN
+F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.08mm_Vertical" H 5300 3400 50  0001 C CNN
 F 3 "" H 5300 3400 50  0001 C CNN
 	1    5300 3400
 	1    0    0    1   
@@ -86,7 +86,7 @@ U 1 1 59F979A7
 P 5800 3200
 F 0 "J2" H 5800 3300 50  0000 C CNN
 F 1 "Conn_01x02" H 5800 3000 50  0000 C CNN
-F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.00mm_Vertical" H 5800 3200 50  0001 C CNN
+F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.08mm_Vertical" H 5800 3200 50  0001 C CNN
 F 3 "" H 5800 3200 50  0001 C CNN
 	1    5800 3200
 	1    0    0    1   
@@ -97,7 +97,7 @@ U 1 1 59F979F9
 P 5300 3000
 F 0 "J3" H 5300 3100 50  0000 C CNN
 F 1 "Conn_01x02" H 5300 2800 50  0000 C CNN
-F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.00mm_Vertical" H 5300 3000 50  0001 C CNN
+F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.08mm_Vertical" H 5300 3000 50  0001 C CNN
 F 3 "" H 5300 3000 50  0001 C CNN
 	1    5300 3000
 	1    0    0    1   
@@ -108,7 +108,7 @@ U 1 1 59F97A3A
 P 5800 2800
 F 0 "J4" H 5800 2900 50  0000 C CNN
 F 1 "Conn_01x02" H 5800 2600 50  0000 C CNN
-F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.00mm_Vertical" H 5800 2800 50  0001 C CNN
+F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.08mm_Vertical" H 5800 2800 50  0001 C CNN
 F 3 "" H 5800 2800 50  0001 C CNN
 	1    5800 2800
 	1    0    0    1   
@@ -119,7 +119,7 @@ U 1 1 59F97A87
 P 5300 2600
 F 0 "J5" H 5300 2700 50  0000 C CNN
 F 1 "Conn_01x02" H 5300 2400 50  0000 C CNN
-F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.00mm_Vertical" H 5300 2600 50  0001 C CNN
+F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.08mm_Vertical" H 5300 2600 50  0001 C CNN
 F 3 "" H 5300 2600 50  0001 C CNN
 	1    5300 2600
 	1    0    0    1   
@@ -130,7 +130,7 @@ U 1 1 59F97ABE
 P 5800 2400
 F 0 "J6" H 5800 2500 50  0000 C CNN
 F 1 "Conn_01x02" H 5800 2200 50  0000 C CNN
-F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.00mm_Vertical" H 5800 2400 50  0001 C CNN
+F 2 "Connectors_Phoenix:PhoenixContact_MSTBVA-G_02x5.08mm_Vertical" H 5800 2400 50  0001 C CNN
 F 3 "" H 5800 2400 50  0001 C CNN
 	1    5800 2400
 	1    0    0    1   
@@ -141,7 +141,7 @@ U 1 1 59F98B56
 P 7300 2450
 F 0 "J7" H 7500 2950 50  0000 C CNN
 F 1 "RJ45" H 7150 2950 50  0000 C CNN
-F 2 "" H 7300 2450 50  0001 C CNN
+F 2 "Connectors:RJ45_8" H 7300 2450 50  0001 C CNN
 F 3 "" H 7300 2450 50  0001 C CNN
 	1    7300 2450
 	0    1    1    0   
@@ -183,7 +183,7 @@ U 1 1 59F98B76
 P 7300 3850
 F 0 "J8" H 7500 4350 50  0000 C CNN
 F 1 "RJ45" H 7150 4350 50  0000 C CNN
-F 2 "" H 7300 3850 50  0001 C CNN
+F 2 "Connectors:RJ45_8" H 7300 3850 50  0001 C CNN
 F 3 "" H 7300 3850 50  0001 C CNN
 	1    7300 3850
 	0    1    1    0   
