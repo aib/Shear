@@ -64,6 +64,8 @@
       command: insserv -r {{item}}
       with_items:
         - bootlogs
+        - keyboard-setup
+        - console-setup
 
     - name: change kernel parameters
       sudo: yes
