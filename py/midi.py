@@ -9,6 +9,7 @@ import time
 import rtmidi
 from rtmidi.midiconstants import *
 
+MIDI_PORT_PID_REGEX = r'^FLUID Synth \((\d+)\).*$'
 MIDI_DISCONNECTED_CHECK_INTERVAL = 1
 MIDI_CONNECTED_CHECK_INTERVAL = 10
 
@@ -98,7 +99,7 @@ def find_port():
 		return (None, None)
 	else:
 		return (midiout, found_pid)
-find_port.port_re = re.compile(r'^FLUID Synth \((\d+)\) \d+:\d+$')
+find_port.port_re = re.compile(MIDI_PORT_PID_REGEX)
 
 def replace_port(old_port, old_pid):
 	if old_port is None or old_pid is None:
