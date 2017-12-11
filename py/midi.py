@@ -151,6 +151,15 @@ def main():
 			port.send_message([CONTROL_CHANGE, ALL_NOTES_OFF, 0])
 		pass
 
+def key_change(key, touched, cap, pin):
+	print("Key #%d %s (cap %s, map %d/%d)" % (key, "touch" if touched else "release", cap_addrs[cap], key_map[key][0], key_map[key][1]))
+
+	if port is not None:
+		if touched:
+			port.send_message([NOTE_ON + key_map[key][0], key_map[key][1], 127])
+		else:
+			port.send_message([NOTE_OFF + key_map[key][0], key_map[key][1], 0])
+
 def midi_tasks(port):
 	for cap in range(len(cap_addrs)):
 		if caps[cap] is not None:
@@ -167,13 +176,9 @@ def midi_tasks(port):
 			keys[key] = touched_data & (1 << pin)
 
 			if keys[key] and not keys_last[key]:
-				print("Key %d touched (%d on %d)" % (key, key_map[key][1], key_map[key][0]))
-				if port is not None:
-					port.send_message([NOTE_ON + key_map[key][0], key_map[key][1], 127])
+				key_change(key, True, cap, pin)
 			elif not keys[key] and keys_last[key]:
-				print("Key %d released (%d on %d)" % (key, key_map[key][1], key_map[key][0]))
-				if port is not None:
-					port.send_message([NOTE_OFF + key_map[key][0], key_map[key][1], 0])
+				key_change(key, False, cap, pin)
 
 			keys_last[key] = keys[key]
 
