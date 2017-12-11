@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
 
+import mpr121
+
 import re
 import os
 import time
 
 import rtmidi
 from rtmidi.midiconstants import *
-import Adafruit_MPR121.MPR121 as MPR121
 
 MIDI_DISCONNECTED_CHECK_INTERVAL = 1
 MIDI_CONNECTED_CHECK_INTERVAL = 10
 
 cap_addrs = [
-	0x5a,
-	0x5b,
-	0x5c,
-	0x5d,
+	(None, 0x5a),
+	(None, 0x5b),
+	(None, 0x5c),
+	(None, 0x5d),
 ]
 
 key_map = [
@@ -127,9 +128,9 @@ def main():
 
 			for i in range(len(cap_addrs)):
 				if caps[i] is None:
-					cap = MPR121.MPR121()
+					cap = mpr121.MPR121(cap_addrs[i][0])
 					try:
-						cap.begin(cap_addrs[i])
+						cap.begin(cap_addrs[i][1])
 						caps[i] = cap
 					except OSError:
 						pass
