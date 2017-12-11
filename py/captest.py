@@ -1,20 +1,19 @@
+import mpr121
+
 import sys
 import time
 
-import Adafruit_MPR121.MPR121 as MPR121
-
-
 cap_addrs = [
-	0x5a,
-	0x5b,
-	0x5c,
-	0x5d
+	(None, 0x5a),
+	(None, 0x5a),
+	(None, 0x5c),
+	(None, 0x5d),
 ]
 
 caps = []
 for addr in cap_addrs:
-	cap = MPR121.MPR121()
-	cap.begin(addr)
+	cap = mpr121.MPR121(addr[0])
+	cap.begin(addr[1])
 	caps.append(cap)
 
 keys = [False] * 48
