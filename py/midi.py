@@ -194,8 +194,8 @@ def main():
 			time.sleep(0.001)
 	except KeyboardInterrupt:
 		if port is not None:
-			port.send_message([CONTROL_CHANGE, ALL_NOTES_OFF, 0])
-		pass
+			for chan in range(16):
+				port.send_message([CONTROL_CHANGE + chan, ALL_NOTES_OFF, 0])
 
 def key_change(key, touched, cap, pin, midi_port):
 	print("Key #%d %s (cap %s, map %s)" % (key, "touch" if touched else "release", cap_addrs[cap], key_map[key]))
