@@ -48,7 +48,8 @@ def sp_change_2(n):
 	return _change_2
 
 def sp_silence(k, t, c, p, m):
-	m.send_message([CONTROL_CHANGE, ALL_NOTES_OFF, 0])
+	for chan in range(16):
+		m.send_message([CONTROL_CHANGE + chan, ALL_NOTES_OFF, 0])
 	print("Silence!")
 
 key_map = [
