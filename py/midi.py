@@ -21,6 +21,32 @@ cap_addrs = [
 	((1, 0x70, 0x10), 0x5b),
 ]
 
+insts = [
+	0,
+	10,
+	20,
+	30
+]
+def sp_change_01(n):
+	base = 10 * n
+	def _change_01(k, t, c, p, m):
+		if not t: return
+		if (insts[n] - base) % 2 == 0: insts[n] += 1
+		else: insts[n] -= 1
+		m.send_message([PROGRAM_CHANGE + n, insts[n]])
+		print("Channel", n, "changed to", insts[n])
+	return _change_01
+
+def sp_change_2(n):
+	base = 10 * n
+	def _change_2(k, t, c, p, m):
+		if not t: return
+		if insts[n] < base+2: insts[n] += 2
+		else: insts[n] -= 2
+		m.send_message([PROGRAM_CHANGE + n, insts[n]])
+		print("Channel", n, "changed to", insts[n])
+	return _change_2
+
 key_map = [
 	(0, 71), # 0
 	(0, 70), # 1
