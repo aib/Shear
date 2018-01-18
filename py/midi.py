@@ -167,13 +167,16 @@ def main():
 		pass
 
 def key_change(key, touched, cap, pin, midi_port):
-	print("Key #%d %s (cap %s, map %d/%d)" % (key, "touch" if touched else "release", cap_addrs[cap], key_map[key][0], key_map[key][1]))
+	print("Key #%d %s (cap %s, map %s)" % (key, "touch" if touched else "release", cap_addrs[cap], key_map[key]))
 
 	if midi_port is not None:
-		if touched:
-			midi_port.send_message([NOTE_ON + key_map[key][0], key_map[key][1], 127])
+		if callable(key_map[key]):
+			key_map[key](key, touched, cap, pin, midi_port)
 		else:
-			midi_port.send_message([NOTE_OFF + key_map[key][0], key_map[key][1], 0])
+			if touched:
+				midi_port.send_message([NOTE_ON + key_map[key][0], key_map[key][1], 127])
+			else:
+				midi_port.send_message([NOTE_OFF + key_map[key][0], key_map[key][1], 0])
 
 def midi_tasks(port):
 	for cap in range(len(cap_addrs)):
