@@ -2,6 +2,7 @@
 
 import re
 import os
+import sys
 import time
 
 import rtmidi
@@ -11,14 +12,19 @@ import Adafruit_MPR121.MPR121 as MPR121
 MIDI_DISCONNECTED_CHECK_INTERVAL = 1
 MIDI_CONNECTED_CHECK_INTERVAL = 10
 
-cap_addrs = [
+cap_addrs1 = [
 	0x5a,
 	0x5b,
 	0x5c,
 	0x5d,
 ]
 
-key_map = [
+cap_addrs2 = [
+	0x5a,
+	0x5b,
+]
+
+key_map1 = [
 	(0, 71), # 0
 	(0, 70), # 1
 	(0, 68), # 2
@@ -28,11 +34,11 @@ key_map = [
 	(0, 67), # 6
 	(0, 68), # 7
 	(0, 71), # 8
-	(0, 69), # 9
-	(0, 70), # 10
-	(0, 71), # 11
+	(0, 87), # 9
+	(0, 86), # 10
+	(0, 84), # 11
 
-	(0, 60), # 12
+	(0, 94), # 12
 	(0, 74), # 13
 	(0, 89), # 14
 	(0, 88), # 15
@@ -45,18 +51,18 @@ key_map = [
 	(0, 84), # 22
 	(0, 76), # 23
 
-	(0, 104), # 24
-	(0, 103), # 25
-	(0, 101), # 26
-	(0, 100), # 27
-	(0, 98), # 28
-	(0, 97), # 29
-	(0, 95), # 30
-	(0, 94), # 31
-	(0, 68), # 32
-	(0, 69), # 33
-	(0, 70), # 34
-	(0, 71), # 35
+	(0, 108), # 24
+	(0, 107), # 25
+	(0, 104), # 26
+	(0, 106), # 27
+	(0, 103), # 28
+	(0, 107), # 29
+	(0, 105), # 30
+	(0, 102), # 31
+	(0, 101), # 32
+	(0, 100), # 33
+	(0, 99), # 34
+	(0, 97), # 35
 
 	(0, 79), # 36
 	(0, 76), # 37
@@ -72,9 +78,52 @@ key_map = [
 	(0, 72), # 47
 ]
 
-caps = [None] * len(cap_addrs)
-keys = [False] * len(key_map)
-keys_last = [False] * len(key_map)
+key_map2 = [
+	(0, 99), # 0
+	(0, 101), # 1
+	(0, 103), # 2
+	(0, 104), # 3
+	(0, 100), # 4
+	(0, 101), # 5
+	(0, 105), # 6
+	(0, 106), # 7
+	(0, 102), # 8
+	(0, 103), # 9
+	(0, 107), # 10
+	(0, 108), # 11
+
+	(1, 80), # 12
+	(1, 79), # 13
+	(1, 77), # 14
+	(1, 79), # 15
+	(1, 80), # 16
+	(1, 84), # 17
+	(1, 86), # 18
+	(1, 87), # 19
+	(1, 91), # 20
+	(1, 92), # 21
+	(1, 96), # 22
+	(1, 98), # 23
+]
+
+cap_addrs = None
+key_map = None
+caps = None
+keys = None
+keys_last = None
+
+def init(i):
+	global cap_addrs, key_map, caps, keys, keys_last
+	if i == 2:
+		cap_addrs = cap_addrs2
+		key_map = key_map2
+	else:
+		cap_addrs = cap_addrs1
+		key_map = key_map1
+
+	caps = [None] * len(cap_addrs)
+	keys = [False] * len(key_map)
+	keys_last = [False] * len(key_map)
 
 def find_port():
 	midiout = rtmidi.MidiOut()
@@ -118,6 +167,13 @@ def pid_exists(pid):
 		return True
 
 def main():
+	if len(sys.argv) > 1 and sys.argv[1] == "2":
+		init(2)
+	else:
+		init(1)
+
+	print("Running on addrs %r" % cap_addrs)
+
 	(port, pid) = (None, None)
 	midiCheckTime = time.monotonic()
 
