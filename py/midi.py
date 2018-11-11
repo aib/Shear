@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import random
 import re
 import os
 import sys
@@ -11,6 +12,34 @@ import Adafruit_MPR121.MPR121 as MPR121
 
 MIDI_DISCONNECTED_CHECK_INTERVAL = 1
 MIDI_CONNECTED_CHECK_INTERVAL = 10
+
+def switchInst(k, inst):
+	if hasattr(k, '__call__'):
+		return k
+	else:
+		return (inst, k[1])
+
+def presetDown(d, port):
+	global key_map
+	if d == 1: return
+	curInst = key_map[0][0]
+	curInst = (curInst - 1) % 7
+	print("Changing current instrument to %d" % curInst)
+	key_map = list(map(lambda k: switchInst(k, curInst), key_map))
+
+def presetUp(d, port):
+	global key_map
+	if d == 1: return
+	curInst = key_map[0][0]
+	curInst = (curInst + 1) % 7
+	print("Changing current instrument to %d" % curInst)
+	key_map = list(map(lambda k: switchInst(k, curInst), key_map))
+
+def panic(d, port):
+	if port is not None:
+		print("Sending all notes off")
+		for i in range(0, 16):
+			port.send_message([CONTROL_CHANGE + i, ALL_NOTES_OFF, 0])
 
 cap_addrs1 = [
 	0x5a,
@@ -25,57 +54,60 @@ cap_addrs2 = [
 ]
 
 key_map1 = [
-	(0, 71), # 0
-	(0, 70), # 1
-	(0, 68), # 2
-	(0, 66), # 3
-	(0, 64), # 4
-	(0, 65), # 5
-	(0, 67), # 6
-	(0, 68), # 7
-	(0, 71), # 8
-	(0, 87), # 9
-	(0, 86), # 10
-	(0, 84), # 11
+	(0, 24), # 0
+	(0, 25), # 1
+	(0, 26), # 2
+	(0, 27), # 3
+	(0, 28), # 4
+	(0, 29), # 5
+	(0, 30), # 6
+	(0, 31), # 7
+	(0, 32), # 8
+#	(0, 45), # 9
+	presetDown, # 9
+#	(0, 46), # 10
+	presetUp, # 10
+	(0, 47), # 11
 
-	(0, 94), # 12
-	(0, 74), # 13
-	(0, 89), # 14
-	(0, 88), # 15
-	(0, 87), # 16
-	(0, 86), # 17
-	(0, 80), # 18
-	(0, 79), # 19
-	(0, 78), # 20
-	(0, 73), # 21
-	(0, 84), # 22
-	(0, 76), # 23
+	(0, 12), # 12
+	(0, 22), # 13
+	(0, 13), # 14
+	(0, 14), # 15
+	(0, 15), # 16
+	(0, 16), # 17
+	(0, 18), # 18
+	(0, 19), # 19
+	(0, 20), # 20
+	(0, 23), # 21
+	(0, 17), # 22
+	(0, 21), # 23
 
-	(0, 108), # 24
-	(0, 107), # 25
-	(0, 104), # 26
-	(0, 106), # 27
-	(0, 103), # 28
-	(0, 107), # 29
-	(0, 105), # 30
-	(0, 102), # 31
-	(0, 101), # 32
-	(0, 100), # 33
-	(0, 99), # 34
-	(0, 97), # 35
+#	(0, 0), # 24
+	panic, # 24
+	(0, 1), # 25
+	(0, 2), # 26
+	(0, 3), # 27
+	(0, 4), # 28
+	(0, 5), # 29
+	(0, 6), # 30
+	(0, 7), # 31
+	(0, 8), # 32
+	(0, 9), # 33
+	(0, 10), # 34
+	(0, 11), # 35
 
-	(0, 79), # 36
-	(0, 76), # 37
-	(0, 75), # 38
-	(0, 73), # 39
-	(0, 72), # 40
-	(0, 59), # 41
-	(0, 60), # 42
-	(0, 61), # 43
-	(0, 67), # 44
-	(0, 69), # 45
-	(0, 70), # 46
-	(0, 72), # 47
+	(0, 33), # 36
+	(0, 34), # 37
+	(0, 35), # 38
+	(0, 36), # 39
+	(0, 37), # 40
+	(0, 38), # 41
+	(0, 39), # 42
+	(0, 40), # 43
+	(0, 41), # 44
+	(0, 42), # 45
+	(0, 43), # 46
+	(0, 44), # 47
 ]
 
 key_map2 = [
@@ -167,6 +199,7 @@ def pid_exists(pid):
 		return True
 
 def main():
+	global key_map
 	if len(sys.argv) > 1 and sys.argv[1] == "2":
 		init(2)
 	else:
@@ -176,6 +209,10 @@ def main():
 
 	(port, pid) = (None, None)
 	midiCheckTime = time.monotonic()
+
+	inst = random.randint(0, 6)
+	print("Changing current instrument to %d" % inst)
+	key_map = list(map(lambda k: switchInst(k, inst), key_map))
 
 	try:
 		while True:
@@ -203,6 +240,7 @@ def main():
 			time.sleep(0.001)
 	except KeyboardInterrupt:
 		if port is not None:
+			print("Sending all notes off")
 			port.send_message([CONTROL_CHANGE, ALL_NOTES_OFF, 0])
 		pass
 
@@ -222,13 +260,23 @@ def midi_tasks(port):
 			keys[key] = touched_data & (1 << pin)
 
 			if keys[key] and not keys_last[key]:
-				print("Key %d touched (%d on %d)" % (key, key_map[key][1], key_map[key][0]))
-				if port is not None:
-					port.send_message([NOTE_ON + key_map[key][0], key_map[key][1], 127])
+				m = key_map[key]
+				if hasattr(m, '__call__'):
+					print("Key %d touched (function)" % key)
+					m(0, port)
+				else:
+					print("Key %d touched (%d on %d)" % (key, m[1], m[0]))
+					if port is not None:
+						port.send_message([NOTE_ON + m[0], m[1], 127])
 			elif not keys[key] and keys_last[key]:
-				print("Key %d released (%d on %d)" % (key, key_map[key][1], key_map[key][0]))
-				if port is not None:
-					port.send_message([NOTE_OFF + key_map[key][0], key_map[key][1], 0])
+				m = key_map[key]
+				if hasattr(m, '__call__'):
+					print("Key %d released (function)" % key)
+					m(1, port)
+				else:
+					print("Key %d released (%d on %d)" % (key, m[1], m[0]))
+					if port is not None:
+						port.send_message([NOTE_OFF + m[0], m[1], 0])
 
 			keys_last[key] = keys[key]
 
