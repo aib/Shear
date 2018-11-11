@@ -33,8 +33,7 @@ def sp_change_01(n):
 		if not t: return
 		if (insts[n] - base) % 2 == 0: insts[n] += 1
 		else: insts[n] -= 1
-		m.send_message([PROGRAM_CHANGE + n, insts[n]])
-		print("Channel", n, "changed to", insts[n])
+		midi_change_instrument(m, n, insts[n])
 	return _change_01
 
 def sp_change_2(n):
@@ -43,8 +42,7 @@ def sp_change_2(n):
 		if not t: return
 		if insts[n] < base+2: insts[n] += 2
 		else: insts[n] -= 2
-		m.send_message([PROGRAM_CHANGE + n, insts[n]])
-		print("Channel", n, "changed to", insts[n])
+		midi_change_instrument(m, n, insts[n])
 	return _change_2
 
 def sp_silence(k, t, c, p, m):
@@ -230,6 +228,10 @@ def midi_tasks(port):
 				key_change(key, False, cap, pin, port)
 
 			keys_last[key] = keys[key]
+
+def midi_change_instrument(midi, channel, instrument):
+	midi.send_message([PROGRAM_CHANGE + channel, instrument])
+	print("Channel", channel, "changed to", instrument)
 
 if __name__ == '__main__':
 	main()
