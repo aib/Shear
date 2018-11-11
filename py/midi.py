@@ -21,28 +21,29 @@ cap_addrs = [
 	((1, 0x70, 0x02), 0x5b),
 ]
 
-insts = [
+channel_map = [
 	0,
 	10,
 	20,
 	30
 ]
+
 def sp_change_01(n):
 	base = 10 * n
 	def _change_01(k, t, c, p, m):
 		if not t: return
-		if (insts[n] - base) % 2 == 0: insts[n] += 1
-		else: insts[n] -= 1
-		midi_change_instrument(m, n, insts[n])
+		if (channel_map[n] - base) % 2 == 0: channel_map[n] += 1
+		else: channel_map[n] -= 1
+		midi_change_instrument(m, n, channel_map[n])
 	return _change_01
 
 def sp_change_2(n):
 	base = 10 * n
 	def _change_2(k, t, c, p, m):
 		if not t: return
-		if insts[n] < base+2: insts[n] += 2
-		else: insts[n] -= 2
-		midi_change_instrument(m, n, insts[n])
+		if channel_map[n] < base+2: channel_map[n] += 2
+		else: channel_map[n] -= 2
+		midi_change_instrument(m, n, channel_map[n])
 	return _change_2
 
 def sp_silence(k, t, c, p, m):
