@@ -46,9 +46,8 @@ def sp_change_2(n):
 	return _change_2
 
 def sp_silence(k, t, c, p, m):
-	for chan in range(16):
-		m.send_message([CONTROL_CHANGE + chan, ALL_NOTES_OFF, 0])
-	print("Silence!")
+	if not t: return
+	midi_silence_all(m)
 
 key_map = [
 	sp_silence, # 0
@@ -232,6 +231,11 @@ def midi_tasks(port):
 def midi_change_instrument(midi, channel, instrument):
 	midi.send_message([PROGRAM_CHANGE + channel, instrument])
 	print("Channel", channel, "changed to", instrument)
+
+def midi_silence_all(midi):
+	for channel in range(16):
+		midi.send_message([CONTROL_CHANGE + channel, ALL_NOTES_OFF, 0])
+	print("Silence!")
 
 if __name__ == '__main__':
 	main()
