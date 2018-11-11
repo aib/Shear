@@ -186,7 +186,12 @@ def main():
 
 			now = time.monotonic()
 			if (now - midiCheckTime >= checkInterval):
+				(old_port, old_pid) = (port, pid)
 				(port, pid) = replace_port(port, pid)
+				if old_port is None and port is not None:
+					print("Connected to PID", pid)
+				elif old_port is not None and port is None:
+					print("Disconnected from PID", old_pid)
 				midiCheckTime = now
 
 			time.sleep(0.001)
