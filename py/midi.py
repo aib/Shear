@@ -21,6 +21,11 @@ cap_addrs = [
 	((1, 0x70, 0x02), 0x5b),
 ]
 
+channel_instrument_map = [
+	[20],
+	[12]
+]
+
 def sp_silence(k, t, c, p, m):
 	if not t: return
 	midi_silence_all(m)
@@ -165,6 +170,8 @@ def main():
 				(port, pid) = replace_port(port, pid)
 				if old_port is None and port is not None:
 					print("Connected to PID", pid)
+					for chan in range(len(channel_instrument_map)):
+						midi_change_instrument(port, chan, channel_instrument_map[chan][0])
 				elif old_port is not None and port is None:
 					print("Disconnected from PID", old_pid)
 				midiCheckTime = now
