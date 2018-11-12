@@ -100,6 +100,7 @@ key_map = [
 caps = [None] * len(cap_addrs)
 keys = [False] * len(key_map)
 keys_last = [False] * len(key_map)
+channel_instrument_indices = [0] * len(channel_instrument_map)
 
 def find_port():
 	midiout = rtmidi.MidiOut()
@@ -224,6 +225,10 @@ def midi_silence_all(midi):
 	for channel in range(16):
 		midi.send_message([CONTROL_CHANGE + channel, ALL_NOTES_OFF, 0])
 	print("Silence!")
+
+def midi_channel_instrument_change(midi, channel, f):
+	channel_instrument_indices[channel] = f(channel_instrument_indices[channel]) % len(channel_instrument_map[channel])
+	midi_change_instrument(midi, channel, channel_instrument_map[channel][channel_instrument_indices[channel]])
 
 if __name__ == '__main__':
 	main()
