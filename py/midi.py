@@ -22,9 +22,26 @@ cap_addrs = [
 ]
 
 channel_instrument_map = [
-	[20],
-	[12]
+	[20, 21, 40],
+	[12, 10, 2, 0]
 ]
+
+def sp_easter_egg(k, t, c, p, m):
+	if not t: return
+	shaggy_index = len(channel_instrument_map[0])-1
+	midi_channel_instrument_change(m, 0, lambda i: 0 if i == shaggy_index else shaggy_index)
+
+def sp_main_switch(k, t, c, p, m):
+	if not t: return
+	midi_channel_instrument_change(m, 0, lambda i: (i+1) % 2)
+
+def sp_bass_switch(k, t, c, p, m):
+	if not t: return
+	midi_channel_instrument_change(m, 1, lambda i: i^2)
+
+def sp_bass_distortion(k, t, c, p, m):
+	if not t: return
+	midi_channel_instrument_change(m, 1, lambda i: i^1)
 
 def sp_silence(k, t, c, p, m):
 	if not t: return
@@ -60,15 +77,15 @@ key_map = [
 	(1, 63), # 24
 	(1, 62), # 25
 	(1, 60), # 26
-	(2, 0), # 27
+	sp_bass_distortion, # 27
 	(0, 83), # 28
 	(0, 81), # 29
 	(0, 77), # 30
 	(0, 76), # 31
-	(2, 1), # 32
-	(2, 2), # 33
-	(2, 3), # 34
-	(2, 4), # 35
+	sp_bass_switch, # 33
+	sp_main_switch, # 32
+	sp_silence, # 34
+	sp_easter_egg, # 35
 
 	(0, 76), # 36
 	(0, 77), # 37
